@@ -1,5 +1,7 @@
 import '../models/product.dart';
 
+final List<Product> globalFavorites = [];
+
 const List<Product> allProducts = [
   Product(
     id: 1,

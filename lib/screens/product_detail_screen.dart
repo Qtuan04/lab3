@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/product.dart';
+import '../data/products.dart';
 import 'cart_screen.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -11,8 +12,14 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  bool _isFav = false;
+  late bool _isFav;
   int _qty = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _isFav = globalFavorites.any((p) => p.id == widget.product.id);
+  }
 
   String _fmt(double price) {
     final n = price.toInt().toString().replaceAllMapped(
@@ -181,7 +188,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             _circleBtn(
               icon: _isFav ? Icons.favorite_rounded : Icons.favorite_border_rounded,
               color: _isFav ? const Color(0xFFE53935) : const Color(0xFF444444),
-              onTap: () => setState(() => _isFav = !_isFav),
+              onTap: () {
+                setState(() {
+                  _isFav = !_isFav;
+                  if (_isFav) {
+                    globalFavorites.add(widget.product);
+                  } else {
+                    globalFavorites.removeWhere((p) => p.id == widget.product.id);
+                  }
+                });
+              },
             ),
             const SizedBox(width: 8),
             _circleBtn(

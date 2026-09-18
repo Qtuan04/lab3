@@ -6,7 +6,8 @@ import 'product_detail_screen.dart';
 import 'cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final VoidCallback onMenuPressed;
+  const HomeScreen({super.key, required this.onMenuPressed});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -101,18 +102,12 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          // Logo
-          Container(
-            width: 34,
-            height: 34,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Center(
-              child: Icon(Icons.memory_rounded,
-                  color: Color(0xFF0052CC), size: 20),
-            ),
+          // Menu button
+          IconButton(
+            icon: const Icon(Icons.menu_rounded, color: Colors.white, size: 28),
+            onPressed: widget.onMenuPressed,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
           ),
           const SizedBox(width: 10),
           const Text(
